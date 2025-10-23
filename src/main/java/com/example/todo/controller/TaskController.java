@@ -1,10 +1,11 @@
 package com.example.todo.controller;
 
-import com.example.todo.entity.Task;
+import com.example.todo.model.dto.TaskDTO;
+import com.example.todo.model.entity.Task;
 import com.example.todo.service.TaskService;
-import com.example.todo.service.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,19 +21,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
+@AllArgsConstructor
 public class TaskController {
-    @Autowired
-    private TaskService taskService;
-    @Autowired private UserService userService;
+    private final TaskService taskService;
 
-    @GetMapping
-    public List<Task> listTasks(Principal principal) {
-        return taskService.getTasksForUser(principal.getName());
+    @GetMapping("/list")
+    public List<TaskDTO> listTasks(Principal principal) {
+        List<TaskDTO> taskForUser = taskService.getTasksForUser(principal.getName());
+        return taskForUser;
     }
 
-    @PostMapping
-    public Task create(@RequestBody Task task, Principal principal) {
-        return taskService.create(task, principal.getName());
+    @PostMapping("/create")
+    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO task, Principal principal) {
+        TaskDTO task1 = taskService.create(task, principal.getName());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(task1);
     }
 
     @PutMapping("/{id}")

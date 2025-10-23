@@ -1,7 +1,7 @@
 package com.example.todo.service;
 
-import com.example.todo.entity.Role;
-import com.example.todo.entity.User;
+import com.example.todo.model.entity.Role;
+import com.example.todo.model.entity.User;
 import com.example.todo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 

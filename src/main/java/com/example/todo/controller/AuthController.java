@@ -1,11 +1,11 @@
 package com.example.todo.controller;
 
-import com.example.todo.dto.AuthRequest;
-import com.example.todo.dto.AuthResponse;
-import com.example.todo.dto.RegisterRequest;
+import com.example.todo.model.dto.AuthRequest;
+import com.example.todo.model.dto.AuthResponse;
+import com.example.todo.model.dto.RegisterRequest;
 import com.example.todo.security.JwtUtil;
 import com.example.todo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
 public class AuthController {
 
-    @Autowired private UserService userService;
-    @Autowired private JwtUtil jwtUtil;
-    @Autowired private AuthenticationManager authManager;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authManager;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {

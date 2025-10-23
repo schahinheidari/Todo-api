@@ -1,4 +1,4 @@
-package com.example.todo.entity;
+package com.example.todo.model.entity;
 
 public enum Role {
     ROLE_USER,

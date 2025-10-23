@@ -1,7 +1,7 @@
 package com.example.todo.security;
 
-import com.example.todo.entity.Role;
-import com.example.todo.entity.Task;
+import com.example.todo.model.entity.Role;
+import com.example.todo.model.entity.Task;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
