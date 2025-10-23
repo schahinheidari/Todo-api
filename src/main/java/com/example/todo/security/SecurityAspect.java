@@ -16,18 +16,18 @@ import org.springframework.stereotype.Component;
 public class SecurityAspect {
 
     @Around("execution(* com.example.todo.repository.TaskRepository.save(..))")
-    public Object neverDoneForAdmins(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object setDescriptionPrefixForAdmins(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
 
         if(args.length > 0 && args[0] instanceof Task) {
-            preventDoneForAdmins((Task)args[0]);
+            allowPrefixDescriptionForAdmins((Task)args[0]);
         }
 
         return joinPoint.proceed(args);
 
     }
 
-    private void preventDoneForAdmins(final Task task) {
+    private void allowPrefixDescriptionForAdmins(final Task task) {
         if(task.getOwner().getRoles().contains(Role.ROLE_ADMIN) || !task.getDescription().startsWith("[Internal Use]")) {
             task.setDescription("[Internal Use] " + task.getDescription());
         }

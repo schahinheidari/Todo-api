@@ -34,17 +34,22 @@ public class TaskController {
     @PostMapping("/create")
     public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO task, Principal principal) {
         TaskDTO task1 = taskService.create(task, principal.getName());
-
         return ResponseEntity.status(HttpStatus.CREATED).body(task1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Task task, Principal principal) {
-        return taskService.update(id, task, principal.getName());
+    public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO task, Principal principal) {
+        ResponseEntity<TaskDTO> existingTask = taskService.update(id, task, principal.getName());
+        return new ResponseEntity<>(existingTask.getBody(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id, Principal principal) {
-        return taskService.delete(id, principal.getName());
+    public ResponseEntity<Void> delete(@PathVariable Long id, Principal principal) {
+        ResponseEntity<?> task = taskService.delete(id, principal.getName());
+        if ((task == null)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        taskService.delete(id, principal.getName());
+        return ResponseEntity.noContent().build();
     }
 }
