@@ -6,11 +6,13 @@ import com.example.todo.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
+@Service
 public class TaskService {
     private final TaskRepository taskRepo;
     private final UserService userService;

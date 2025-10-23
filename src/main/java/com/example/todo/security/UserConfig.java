@@ -19,8 +19,4 @@ public class UserConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserService bean(final UserRepository userRepository, final PasswordEncoder passwordEncoder) throws Exception {
-        return new UserService(userRepository, passwordEncoder);
-    }
 }
